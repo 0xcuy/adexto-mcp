@@ -6,6 +6,7 @@ on:
     paths: ["agent-kit/**", ".github/workflows/agent-kit.yml"]
   pull_request:
     paths: ["agent-kit/**", ".github/workflows/agent-kit.yml"]
+  workflow_dispatch:
 
 permissions:
   contents: read
