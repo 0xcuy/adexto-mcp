@@ -1,0 +1,67 @@
+{
+  "name": "@adexto/agent-kit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Typed client for the ADEXTO MCP server, an x402 payment signer, and launch, stake and claim helpers that sign with your own key.",
+  "type": "module",
+  "license": "BUSL-1.1",
+  "homepage": "https://github.com/0xcuy/adexto-mcp/tree/main/agent-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xcuy/adexto-mcp.git",
+    "directory": "agent-kit"
+  },
+  "bugs": {
+    "url": "https://github.com/0xcuy/adexto-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "x402",
+    "erc-8004",
+    "agents",
+    "viem",
+    "adexto"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:live": "ADEXTO_LIVE=1 vitest run test/live.test.ts",
+    "test:fork": "vitest run test/fork.test.ts"
+  },
+  "peerDependencies": {
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "viem": "2.55.17",
+    "vitest": "4.1.11"
+  }
+}
