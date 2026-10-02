@@ -81,7 +81,10 @@ again with it as `xPayment`. The curve on the market's own chain then sends the 
 USDC on Base and nothing else: no gas on Base, no gas on the destination chain, no bridge.
 
 Delivery runs before the charge, so a failed fill is not charged. The same gateway is also reachable as plain
-HTTP at `https://x402.adexto.xyz` ([OpenAPI](https://x402.adexto.xyz/openapi.json)).
+HTTP at `https://x402.adexto.xyz` ([OpenAPI](https://x402.adexto.xyz/openapi.json)), where x402 v2 clients such
+as `@x402/fetch` work as they are: every 402 also carries a `PAYMENT-REQUIRED` header, and the payment can come
+back in `PAYMENT-SIGNATURE`. Each market is listed on
+[x402scan](https://www.x402scan.com/server/182d3207-89b6-4081-b9e9-eed34185866c).
 
 ## Launch, stake and claim with your own key
 

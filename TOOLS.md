@@ -107,7 +107,7 @@ Input: none.
 | `settlementAsset` | string \| null | Asset paid. |
 | `scheme` | string \| null | x402 scheme and transfer method. |
 | `header` | string \| null | Header that carries the payment. |
-| `headerNote` | string \| null | Why only one header name is accepted. |
+| `headerNote` | string \| null | Which payment header names the gateway reads. |
 | `steps` | string[] | Steps from challenge to settled buy. |
 | `youNeverNeed` | string[] | What a buyer never needs. |
 | `orderOfOperations` | string \| null | Delivery runs before the charge. |
