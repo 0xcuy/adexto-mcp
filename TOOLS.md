@@ -288,7 +288,7 @@ Asks the market's own agent a question about that market. Open to an address who
 
 **Prepare a market launch for your own key to sign** · writes
 
-Launch a new ADEXTO market without handing over a key. Call it once without a signature: it checks the ticker, the chain and an optional ERC-8004 agent you own, and returns an attestation message for the deployer to sign (EIP-191). Call it again with the same arguments plus attestationMessage and attestationSignature: it anchors the launch metadata and returns the unsigned deployTrinity transaction (value 0, gas only), simulated from your address, with a gas estimate. Fee preset: 1.00% per trade, 0.70% to the creator. All supply goes into the curve; the creator gets no allocation. After the transaction is mined, call register_launch.
+Launch a new ADEXTO market without handing over a key. Call it once without a signature: it checks the ticker, the chain and an optional ERC-8004 agent you own, and returns an attestation message for the deployer to sign (EIP-191). Call it again with the same arguments plus attestationMessage and attestationSignature: it anchors the launch metadata and returns the unsigned deployTrinity transaction (value 0, gas only), simulated from your address, with a gas estimate. Fee preset: 1.00% per trade, 0.70% to the creator. All supply goes into the curve; the creator gets no allocation. After the transaction is mined, call register_launch. The attestation message ends with an acceptance of the ADEXTO Terms and Acceptable Use Policy (adexto.xyz/terms): signing it is the deployer's acceptance, and markets that break the policy are removed from ADEXTO.
 
 | Input | Type | Required | Description |
 |---|---|---|---|
