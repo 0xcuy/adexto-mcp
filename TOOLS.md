@@ -66,7 +66,7 @@ Full detail for a single market: chain, curve address, supply, fee rates, curren
 | `creator` | string \| null | Creator address, paid the creator fee. |
 | `launchTx` | string \| null | Launch transaction. |
 | `launchBlock` | number \| null | Launch block. |
-| `historySource` | string \| null | indexer or rpc-logs. |
+| `historySource` | string \| null | indexer, market-index or rpc-logs: which read path serves trade_history. |
 | `buyResource` | string \| null | x402 URL that sells this market. |
 | `agentIdentity` | object \| null | The ERC-8004 agent the token is bound to, or null when unbound. |
 | `staking` | object \| null | How to stake this market, or null when its chain has no stake contract. |
@@ -170,7 +170,7 @@ Buys a market for real, completing the step an LLM cannot do alone: signing the 
 
 **Every swap on a market, and how complete the answer is** · read-only
 
-Trade history for a market, newest first, with an explicit statement of whether it reaches the launch block. Free. Monad is served by our Envio indexer, which has no lookback window; the other chains are served by a log scan whose reach is reported per call. When the scan cannot reach the launch block the answer says so instead of presenting a shortened list as the whole history.
+Trade history for a market, newest first, with an explicit statement of whether it reaches the launch block. Free. Monad and Robinhood Chain are served by our Envio indexer and Base and Arbitrum One by our subgraph, both complete from the launch block; every market is also covered by our per-market index of every swap since launch, joined to a live log scan for the newest fills. When a market's index is still catching up or a read fails, the answer says so instead of presenting a shortened list as the whole history. Treasury buybacks are not trades and are not listed, although the curve's swapCount counts them.
 
 | Input | Type | Required | Description |
 |---|---|---|---|
@@ -186,16 +186,18 @@ Trade history for a market, newest first, with an explicit statement of whether 
 | `chainId` | number \| null | Chain id of the market. |
 | `chain` | string \| null | Chain name and id. |
 | `curve` | string \| null | Bonding curve contract. |
-| `source` | string \| null | envio-hyperindex or rpc-logs. |
+| `source` | string \| null | envio-hyperindex, the-graph, market-index or rpc-logs: which read path answered. |
 | `complete` | boolean \| null | True only when the answer reaches the launch block. |
 | `completeBecause` | string \| null | Why the history is complete. |
 | `incompleteBecause` | string \| null | Why older swaps may be missing. |
-| `totalSwaps` | number \| null | Swaps since launch, from the indexer. |
+| `totalSwaps` | number \| null | Swaps since launch, on every read path. Treasury buybacks are not counted, so this can be lower than the curve's swapCount. On an incomplete answer, the swaps seen so far. |
 | `returned` | number \| null | Rows in swaps. |
-| `indexerSyncedToBlock` | number \| null | Block the indexer has reached. |
-| `indexerError` | any | Why the indexer was skipped, when it was. |
-| `degraded` | boolean \| null | True when the indexer failed and a log scan answered instead. |
+| `indexerSyncedToBlock` | number \| null | Block the indexer or subgraph has reached. |
+| `indexerError` | any | Why the indexer or subgraph was skipped, when it was. |
+| `degraded` | boolean \| null | True when the indexer or subgraph failed and another read path answered instead. |
 | `launchBlock` | number \| null | Launch block of the market. |
+| `indexedThroughBlock` | number \| null | Last block our per-market index has scanned, when it was used. |
+| `indexProgress` | number \| null | Share of the blocks since launch the per-market index has scanned, 0 to 1, while it catches up. |
 | `coverage` | any | What the log scan reached. |
 | `swaps` | object[] | Swaps, newest first. |
 | `publicEndpoint` | string \| null | Public GraphQL endpoint of the indexer. |
@@ -292,7 +294,7 @@ Launch a new ADEXTO market without handing over a key. Call it once without a si
 
 | Input | Type | Required | Description |
 |---|---|---|---|
-| `chainId` | integer | yes | Chain to launch on: 143 Monad, 42161 Arbitrum One, 4663 Robinhood Chain, 8453 Base, 16661 0G. |
+| `chainId` | integer | yes | Chain to launch on: 143 Monad, 42161 Arbitrum One, 4663 Robinhood Chain, 8453 Base, 5042 Arc, 16661 0G. |
 | `name` | string | yes | Token name, up to 64 bytes. |
 | `symbol` | string | yes | Ticker, 2 to 12 letters A-Z or digits. Permanent on chain. |
 | `deployer` | string | yes | Address that signs the attestation and sends the launch transaction. It becomes the market's creator and receives the creator fee. |

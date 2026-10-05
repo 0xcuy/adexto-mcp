@@ -101,7 +101,8 @@ export interface MarketSummary extends Open {
   curve: Address;
   tradable: boolean;
   priceNative: number;
-  historySource: string;
+  /** Which read path serves trade_history for this market. */
+  historySource: "indexer" | "market-index" | "rpc-logs" | string;
   agentIdentity: AgentIdentity | null;
 }
 
@@ -136,7 +137,8 @@ export interface MarketDetail extends Open {
   creator: Address;
   launchTx: Hex;
   launchBlock: number;
-  historySource: string;
+  /** Which read path serves trade_history for this market. */
+  historySource: "indexer" | "market-index" | "rpc-logs" | string;
   buyResource: string;
   agentIdentity: AgentIdentity | null;
   staking: StakingSummary | null;
@@ -202,7 +204,8 @@ export interface BuyTokenResult extends Open {
 
 export interface Swap extends Open {
   txHash: Hex;
-  side: "buy" | "sell" | string;
+  /** The server sends "BUY" or "SELL". */
+  side: "BUY" | "SELL" | string;
   amountToken: number;
   amountNative: number;
   trader: Address;
@@ -214,8 +217,14 @@ export interface TradeHistoryResult extends Open {
   symbol: string;
   chainId: number;
   curve: Address;
-  source: string;
+  /**
+   * Which read path answered: Envio (Monad, Robinhood Chain), the subgraph (Base, Arbitrum One),
+   * the per-market index joined to a live log scan, or the log scan alone.
+   */
+  source: "envio-hyperindex" | "the-graph" | "market-index" | "rpc-logs" | string;
+  /** True only when the answer reaches the market's launch block. `incompleteBecause` says why not. */
   complete: boolean;
+  /** Swaps since launch. Treasury buybacks are not counted, so this can be below the curve's swapCount. */
   totalSwaps: number;
   returned: number;
   swaps: Swap[];
