@@ -79,8 +79,13 @@ chain first and settles the USDC after, so a failed fill is not charged.
 | Buy | The 402 terms are the `exact` scheme, USDC on Base, ADEXTO's payee, and at most `maxAmountAtomic` (0.20 USDC by default). |
 
 A refusal throws `UnsafeTransactionError` and nothing is sent. The built-in addresses are the
-ADEXTO deployments as of 2 October 2026; pass newer ones through the `trusted` option instead of
-turning the checks off.
+ADEXTO deployments as of 6 October 2026, on all six chains including Arc; pass newer ones through
+the `trusted` option instead of turning the checks off.
+
+**On Arc** the gas is paid in USDC (18 decimals at the native level), so a wallet that holds USDC on
+Arc can launch, stake and claim with nothing else. viem's `arc` chain ships without a default RPC URL,
+so pass one to the transport: `http("https://rpc.mainnet.arc.io")`. The Arc factory has the same address
+as the Robinhood Chain factory; the kit tells them apart by chain id.
 
 ## Tests
 

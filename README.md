@@ -3,7 +3,7 @@
 # ADEXTO MCP
 
 The remote MCP server for [ADEXTO](https://adexto.xyz) bonding-curve token markets on 0G, Base, Arbitrum One,
-Monad and Robinhood Chain, plus a TypeScript kit that signs its transactions with your own key.
+Monad, Robinhood Chain and Arc, plus a TypeScript kit that signs its transactions with your own key.
 
 - **Endpoint:** `https://adexto.xyz/api/mcp`. Streamable HTTP, no account, no API key.
 - **14 tools:** list and price markets, read trade history, buy with USDC on Base over x402, read and open stakes,

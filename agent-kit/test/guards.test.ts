@@ -67,6 +67,13 @@ describe("assertLaunchTransaction", () => {
   it("accepts a factory passed as trusted, in addition to the built-in one", () => {
     expect(() => assertLaunchTransaction(launchTx({ to: other }), { ...ctx, trusted: { factories: { 8453: [other] } } })).not.toThrow();
   });
+  // Arc's factory has the same address as Robinhood Chain's, so the chain id is what tells them apart.
+  it("accepts a launch on Arc, and refuses the same transaction labelled for another chain", () => {
+    const arc = { chainId: 5042, deployer, symbol: "TEST" };
+    expect(LAUNCH_FACTORIES[5042]).toBe(LAUNCH_FACTORIES[4663]);
+    expect(() => assertLaunchTransaction(launchTx({ to: LAUNCH_FACTORIES[5042]!, chainId: 5042 }), arc)).not.toThrow();
+    expect(() => assertLaunchTransaction(launchTx({ to: LAUNCH_FACTORIES[5042]!, chainId: 4663 }), arc)).toThrow(UnsafeTransactionError);
+  });
 });
 
 describe("assertStakeTransactions", () => {

@@ -327,9 +327,9 @@ Launch a new ADEXTO market without handing over a key. Call it once without a si
 | `gasEstimate` | string \| null | Step two: estimated gas. |
 | `gasSource` | string \| null | estimateGas or measured. |
 | `gasPriceWei` | string \| null | Current gas price. |
-| `estimatedCostWei` | string \| null | Estimated cost in wei. |
+| `estimatedCostWei` | string \| null | Estimated cost in wei: gas used times the gas price, or the gas limit times the price on Monad, which bills the whole limit. |
 | `deployerBalanceWei` | string \| null | Deployer balance. |
-| `fundsSufficient` | boolean \| null | Whether the balance covers the estimate. |
+| `fundsSufficient` | boolean \| null | Whether the balance covers the transaction's gas limit at the current price, which the node requires. |
 | `nativeSymbol` | string \| null | Native asset that pays the gas. |
 | `simulation` | object | The transaction simulated from the deployer. |
 | `market` | any | The market the launch creates: supply, fee split, opening market cap, agent. |

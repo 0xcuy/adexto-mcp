@@ -2,9 +2,12 @@
  * Addresses the kit checks unsigned transactions against before your key signs them.
  *
  * The MCP server builds every transaction; these lists are how the kit refuses one that points
- * somewhere it should not. They are the ADEXTO deployments as of 2 October 2026. When ADEXTO ships
- * a new factory or stake contract, pass it through the `trusted*` options rather than turning the
- * checks off.
+ * somewhere it should not. They are the ADEXTO deployments as of 6 October 2026, Arc included. When
+ * ADEXTO ships a new factory or stake contract, pass it through the `trusted*` options rather than
+ * turning the checks off.
+ *
+ * Every list is keyed by chain id, and that matters: the Arc and Robinhood Chain factories share an
+ * address, so an address is only meaningful together with its chain.
  */
 import type { Address } from "./types.js";
 
@@ -27,6 +30,7 @@ export const CHAIN_NAMES: Readonly<Record<number, string>> = {
   42161: "Arbitrum One",
   143: "Monad",
   4663: "Robinhood Chain",
+  5042: "Arc",
 };
 
 /** The launch factory per chain: the only `to` a prepare_launch transaction may have. */
@@ -36,6 +40,8 @@ export const LAUNCH_FACTORIES: Readonly<Record<number, Address>> = {
   42161: "0x79DF3671e7e7456832C84a34c2bC0DB7871C0E0E",
   143: "0x3dFcBEd7dd889F465cC9f75c430B43Ef873b6056",
   4663: "0x8e63e117E71A80Cfc10fDF375F079e2e29cd7D7D",
+  // Same address as Robinhood Chain's: both sit at the deployer's first-nonce address.
+  5042: "0x8e63e117E71A80Cfc10fDF375F079e2e29cd7D7D",
 };
 
 /** One stake hub per chain; it accepts every market launched through ADEXTO that has no stake contract of its own. */
@@ -45,6 +51,7 @@ export const STAKE_HUBS: Readonly<Record<number, Address>> = {
   42161: "0xdf8891bA9fd8e3DC2E7D0A0ccae279247cd2ddf3",
   143: "0xb89d17F7308Ac007b106EB400eB2A8CB51cf887A",
   4663: "0x05EFA7F066FcbefbE650EDd58583C107831A600B",
+  5042: "0xb264D861264B0e4f8fb98A61B7694BA8a3B6BBe3",
 };
 
 /** Markets with a stake contract of their own. */
