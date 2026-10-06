@@ -170,7 +170,7 @@ Buys a market for real, completing the step an LLM cannot do alone: signing the 
 
 **Every swap on a market, and how complete the answer is** · read-only
 
-Trade history for a market, newest first, with an explicit statement of whether it reaches the launch block. Free. Monad and Robinhood Chain are served by our Envio indexer and Base and Arbitrum One by our subgraph, both complete from the launch block; every market is also covered by our per-market index of every swap since launch, joined to a live log scan for the newest fills. When a market's index is still catching up or a read fails, the answer says so instead of presenting a shortened list as the whole history. Treasury buybacks are not trades and are not listed, although the curve's swapCount counts them.
+Trade history for a market, newest first, with an explicit statement of whether it reaches the launch block. Free. Monad, Robinhood Chain and Arc are served by our Envio indexer and Base and Arbitrum One by our subgraph, both complete from the launch block; every market is also covered by our per-market index of every swap since launch, joined to a live log scan for the newest fills. When a market's index is still catching up or a read fails, the answer says so instead of presenting a shortened list as the whole history. Treasury buybacks are not trades and are not listed, although the curve's swapCount counts them.
 
 | Input | Type | Required | Description |
 |---|---|---|---|
